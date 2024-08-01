@@ -1,0 +1,56 @@
+package com.example.demo.pdf;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.pdf.PdfWriter;
+//import java.nio.file.Path;
+//import java.nio.file.Paths;
+
+public class PDFGeneration {
+
+	public static void main(String[] args) throws FileNotFoundException, DocumentException {
+		try {
+            // Create a new Document
+            Document document = new Document();
+
+            // Initialize PdfWriter
+            PdfWriter.getInstance(document, new FileOutputStream("Sample.pdf"));
+
+            // Open the Document
+            document.open();
+
+            // Create a Font
+            Font font = FontFactory.getFont(FontFactory.TIMES_ITALIC, 16, BaseColor.BLACK);
+
+            // Create a Chunk with the text "Hello World"
+            Chunk chunk = new Chunk("Hello World", font);
+
+            // Add the Chunk to the Document
+            document.add(chunk);
+
+         // Get the image path from resources
+            Path path = Paths.get(ClassLoader.getSystemResource("Java_logo.png").toURI());
+
+            // Load the image from the path
+            Image img = Image.getInstance(path.toAbsolutePath().toString());
+
+            // Add the image to the document
+            document.add(img);
+            // Close the Document
+            document.close();
+
+            System.out.println("PDF created successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+		 
+	
+}

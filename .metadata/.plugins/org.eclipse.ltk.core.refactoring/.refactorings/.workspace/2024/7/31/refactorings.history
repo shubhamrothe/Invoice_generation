@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename Java project &apos;Demo-ToGeneratePDF&apos; to &apos;Demo-ToGeneratePDF_UsingiTextLibrary&apos;&#x0D;&#x0A;- Original element: &apos;Demo-ToGeneratePDF&apos;&#x0D;&#x0A;- Renamed element: &apos;Demo-ToGeneratePDF&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename Java project &apos;Demo-ToGeneratePDF&apos;" flags="7" id="org.eclipse.jdt.ui.rename.java.project" input="=Demo-ToGeneratePDF" name="Demo-ToGeneratePDF_UsingiTextLibrary" references="true" stamp="1722416804507" version="1.0"/>
+</session>

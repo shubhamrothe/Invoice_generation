@@ -1,0 +1,15 @@
+package com.example.serviceImpl;
+
+import com.example.model.Order;
+import com.example.service.InvoiceService;
+
+public class InvoiceServiceImpl implements InvoiceService{
+
+	@Override
+	public byte[] generateInvoice(Order order) {
+
+		
+		return null;
+	}
+
+}

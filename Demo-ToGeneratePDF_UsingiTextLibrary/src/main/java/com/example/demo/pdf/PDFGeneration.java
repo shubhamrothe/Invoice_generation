@@ -1,0 +1,116 @@
+package com.example.demo.pdf;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Scanner;
+import java.util.stream.Stream;
+
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
+public class PDFGeneration {
+
+	public static void main(String[] args) throws FileNotFoundException, DocumentException {
+		try {
+			// Create a new Document
+			Document document = new Document();
+
+			// Initialize PdfWriter
+			PdfWriter.getInstance(document, new FileOutputStream("Sample.pdf"));
+
+			// Open the Document
+			document.open();
+
+			// Create a Font
+			Font font = FontFactory.getFont(FontFactory.TIMES_ITALIC, 16, BaseColor.BLACK);
+
+			// Create a Chunk with the text "Hello World"
+			Chunk chunk = new Chunk("Hello World", font);
+
+			// Add the Chunk to the Document
+			document.add(chunk);
+
+			// Get the image path from resources
+			Path path = Paths.get(ClassLoader.getSystemResource("java_logo.png").toURI());
+
+			// Load the image from the path
+			Image img = Image.getInstance(path.toAbsolutePath().toString());
+
+			// Add the image to the document
+			document.add(img);
+			
+			PdfPTable table = new PdfPTable(3);
+			addTableHeader(table);
+			addRows(table);
+			addCustomRows(table);
+			document.add(table);
+
+			// Close the Document
+			document.close();
+
+			System.out.println("PDF created successfully!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void addCustomRows(PdfPTable table) throws URISyntaxException, BadElementException, IOException {
+//		Path path = Paths.get(ClassLoader.getSystemResource("Java_logo.png").toURI());
+//		Image img = Image.getInstance(path.toAbsolutePath().toString());
+//		img.scalePercent(10);
+
+//		PdfPCell imageCell = new PdfPCell(img);
+//		table.addCell(imageCell);
+
+		PdfPCell horizontalAlignCell = new PdfPCell(new Phrase("2"));
+		horizontalAlignCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		table.addCell(horizontalAlignCell);
+
+		PdfPCell verticalAlignCell = new PdfPCell(new Phrase("Shubham"));
+		verticalAlignCell.setVerticalAlignment(Element.ALIGN_BOTTOM);
+		table.addCell(verticalAlignCell);
+		
+		PdfPCell horizontalAlignCell1 = new PdfPCell(new Phrase("Rothe"));
+		horizontalAlignCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		table.addCell(horizontalAlignCell1);
+
+	}
+
+	private static void addRows(PdfPTable table) {
+		// TODO Auto-generated method stub
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter Id");        
+		table.addCell(sc.next());
+		System.out.println("Enter first name");
+		table.addCell(sc.next());
+		System.out.println("Enter second name");
+		table.addCell(sc.next());
+
+	}
+
+	private static void addTableHeader(PdfPTable table) {
+		// TODO Auto-generated method stub
+		Stream.of("Id", "First_Name", "Last_Name").forEach(columnTitle -> {
+			PdfPCell header = new PdfPCell();
+			header.setBackgroundColor(BaseColor.LIGHT_GRAY);
+			header.setBorderWidth(2);
+			header.setPhrase(new Phrase(columnTitle));
+			table.addCell(header);
+		});
+	}
+}
